@@ -27,9 +27,9 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
           <a href="#" className="font-medium text-property-navy">Dashboard</a>
-          <a href="#" className="font-medium text-property-gray hover:text-property-blue transition-colors">Saved Properties</a>
-          <a href="#" className="font-medium text-property-gray hover:text-property-blue transition-colors">Analytics</a>
-          <a href="#" className="font-medium text-property-gray hover:text-property-blue transition-colors">Contacts</a>
+          <a href="#" className="font-medium text-property-navy hover:text-property-blue transition-colors">Saved Properties</a>
+          <a href="#" className="font-medium text-property-navy hover:text-property-blue transition-colors">Analytics</a>
+          <a href="#" className="font-medium text-property-navy hover:text-property-blue transition-colors">Contacts</a>
         </nav>
 
         {/* Search bar - Desktop */}
@@ -92,10 +92,10 @@ const Navbar = () => {
         <nav className="md:hidden bg-white py-3 px-4 shadow-sm">
           <ul className="space-y-4">
             <li><a href="#" className="block font-medium text-property-navy">Dashboard</a></li>
-            <li><a href="#" className="block font-medium text-property-gray">Saved Properties</a></li>
-            <li><a href="#" className="block font-medium text-property-gray">Analytics</a></li>
-            <li><a href="#" className="block font-medium text-property-gray">Contacts</a></li>
-            <li><a href="#" className="block font-medium text-property-gray">Settings</a></li>
+            <li><a href="#" className="block font-medium text-property-navy">Saved Properties</a></li>
+            <li><a href="#" className="block font-medium text-property-navy">Analytics</a></li>
+            <li><a href="#" className="block font-medium text-property-navy">Contacts</a></li>
+            <li><a href="#" className="block font-medium text-property-navy">Settings</a></li>
           </ul>
         </nav>
       )}
