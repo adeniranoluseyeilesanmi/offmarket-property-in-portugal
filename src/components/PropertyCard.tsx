@@ -55,13 +55,13 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           </button>
           <div className="absolute bottom-3 left-3 flex gap-2">
             <Badge className={`${getStatusColor(property.listedStatus)}`}>
-              {property.listedStatus === 'off-market' ? 'Fora do Mercado' : 
-               property.listedStatus === 'coming-soon' ? 'Em Breve' : 'Lead'}
+              {property.listedStatus === 'off-market' ? 'Off Market' : 
+               property.listedStatus === 'coming-soon' ? 'Coming Soon' : 'Lead'}
             </Badge>
             {property.vendorFinancing.available && (
               <Badge className="bg-green-100 text-green-800 flex items-center gap-1">
                 <CreditCard size={12} />
-                Financ. Vendedor
+                Seller Finance
               </Badge>
             )}
           </div>
@@ -75,14 +75,14 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
           
           {property.vendorFinancing.available && (
             <div className="text-sm text-green-600 mb-2">
-              Entrada: {property.vendorFinancing.downPaymentRequired}% • Taxa: {property.vendorFinancing.interestRate}%
+              Down Payment: {property.vendorFinancing.downPaymentRequired}% • Rate: {property.vendorFinancing.interestRate}%
             </div>
           )}
           
           <div className="flex justify-between items-center text-sm">
             <div className="flex space-x-3">
-              <span>{property.bedrooms} quartos</span>
-              <span>{property.bathrooms} wcs</span>
+              <span>{property.bedrooms} beds</span>
+              <span>{property.bathrooms} baths</span>
             </div>
             <div className="flex items-center">
               <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>

@@ -40,12 +40,12 @@ const FinancingCalculator = ({ propertyPrice, vendorFinancing }: FinancingCalcul
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Calculadora de Financiamento</CardTitle>
+        <CardTitle className="text-lg">Financing Calculator</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
           <label className="block mb-2 text-sm font-medium">
-            Entrada: {downPaymentPercent[0]}% ({formatCurrency(downPaymentAmount)})
+            Down Payment: {downPaymentPercent[0]}% ({formatCurrency(downPaymentAmount)})
           </label>
           <Slider 
             value={downPaymentPercent}
@@ -59,7 +59,7 @@ const FinancingCalculator = ({ propertyPrice, vendorFinancing }: FinancingCalcul
 
         <div>
           <label className="block mb-2 text-sm font-medium">
-            Prazo: {loanTerm[0]} anos
+            Term: {loanTerm[0]} years
           </label>
           <Slider 
             value={loanTerm}
@@ -73,23 +73,23 @@ const FinancingCalculator = ({ propertyPrice, vendorFinancing }: FinancingCalcul
 
         <div className="grid grid-cols-2 gap-4 pt-4 border-t">
           <div className="bg-gray-50 p-3 rounded-md">
-            <div className="text-sm text-gray-500">Montante do Empréstimo</div>
+            <div className="text-sm text-gray-500">Loan Amount</div>
             <div className="font-bold">{formatCurrency(loanAmount)}</div>
           </div>
           <div className="bg-gray-50 p-3 rounded-md">
-            <div className="text-sm text-gray-500">Taxa de Juro</div>
+            <div className="text-sm text-gray-500">Interest Rate</div>
             <div className="font-bold">{vendorFinancing.interestRate}%</div>
           </div>
           <div className="bg-blue-50 p-3 rounded-md col-span-2">
-            <div className="text-sm text-gray-500">Pagamento Mensal</div>
+            <div className="text-sm text-gray-500">Monthly Payment</div>
             <div className="font-bold text-lg text-blue-600">{formatCurrency(monthlyPayment)}</div>
           </div>
         </div>
 
         <div className="text-xs text-gray-500 space-y-1">
-          <p>• Cálculo estimativo, sujeito a aprovação</p>
-          <p>• Taxas e termos podem variar</p>
-          <p>• Consulte um consultor financeiro</p>
+          <p>• Estimated calculation, subject to approval</p>
+          <p>• Rates and terms may vary</p>
+          <p>• Consult a financial advisor</p>
         </div>
       </CardContent>
     </Card>

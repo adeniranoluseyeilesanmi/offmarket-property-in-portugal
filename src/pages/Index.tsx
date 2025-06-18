@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import SearchFilters from "@/components/SearchFilters";
@@ -27,12 +28,12 @@ const Index = () => {
     let results = [...properties];
     
     // Apply location filter
-    if (filters.location !== 'Qualquer Localização') {
+    if (filters.location !== 'Any Location') {
       results = results.filter(property => property.city === filters.location);
     }
     
     // Apply property type filter
-    if (filters.propertyType !== 'Qualquer Tipo') {
+    if (filters.propertyType !== 'Any Type') {
       results = results.filter(property => property.propertyType === filters.propertyType);
     }
     
@@ -42,7 +43,7 @@ const Index = () => {
     );
     
     // Apply bedrooms filter
-    if (filters.bedrooms !== 'Qualquer') {
+    if (filters.bedrooms !== 'Any') {
       const minBedrooms = parseInt(filters.bedrooms.replace('+', ''));
       results = results.filter(property => property.bedrooms >= minBedrooms);
     }
@@ -99,16 +100,16 @@ const Index = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-property-navy">Propriedades Fora do Mercado em Portugal</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-property-navy">Off-Market Properties in Portugal</h1>
           <div className="flex space-x-2">
             <Button variant="outline" size="sm" className="hidden md:flex">
-              <Download size={16} className="mr-1" /> Exportar
+              <Download size={16} className="mr-1" /> Export
             </Button>
             <Button variant="outline" size="sm" className="hidden md:flex">
-              <BarChartIcon size={16} className="mr-1" /> Relatórios
+              <BarChartIcon size={16} className="mr-1" /> Reports
             </Button>
             <Button size="sm" onClick={handleRefresh}>
-              <RefreshCw size={16} className="mr-1" /> Atualizar
+              <RefreshCw size={16} className="mr-1" /> Refresh
             </Button>
           </div>
         </div>
@@ -145,12 +146,12 @@ const Index = () => {
                 <div className="bg-gray-100 p-4 rounded-full mb-4">
                   <FileText size={28} className="text-property-gray" />
                 </div>
-                <h3 className="text-lg font-medium mb-1">Nenhuma propriedade encontrada</h3>
+                <h3 className="text-lg font-medium mb-1">No properties found</h3>
                 <p className="text-gray-500 text-center mb-6 max-w-md">
-                  Nenhuma propriedade corresponde aos seus filtros atuais. Tente ajustar os seus critérios de pesquisa ou adicionar uma nova propriedade.
+                  No properties match your current filters. Try adjusting your search criteria or add a new property.
                 </p>
                 <Button size="sm" className="flex items-center">
-                  <Plus size={16} className="mr-1" /> Adicionar Propriedade
+                  <Plus size={16} className="mr-1" /> Add Property
                 </Button>
               </div>
             )}

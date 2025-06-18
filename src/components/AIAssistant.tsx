@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -18,7 +19,7 @@ const AIAssistant = () => {
   const [conversation, setConversation] = useState<{role: string, content: string}[]>([
     {
       role: "assistant",
-      content: "Olá! Sou o seu assistente de IA para sourcing de propriedades no mercado português. Posso ajudá-lo a encontrar propriedades fora do mercado, analisar negócios potenciais, conectar com proprietários, e fornecer insights sobre financiamento do vendedor e o mercado português. Como posso ajudar hoje?"
+      content: "Hello! I'm your AI assistant for sourcing properties in the Portuguese market. I can help you find off-market properties, analyze potential deals, connect with owners, and provide insights on seller financing and the Portuguese real estate market. How can I help you today?"
     }
   ]);
 
@@ -36,12 +37,12 @@ const AIAssistant = () => {
     // Simulate AI response after a delay
     setTimeout(() => {
       const aiResponses = [
-        "Identifiquei 3 propriedades em Lisboa e Porto com financiamento do vendedor disponível. Taxas entre 3,8-5,2% com entradas de 15-30%. O mercado português mostra rendimentos de arrendamento de 4-6% anualmente. Quer que analise o potencial ROI?",
-        "Posso ajudar a redigir uma mensagem personalizada ao proprietário em Cascais. Parece motivado para vender devido a emigração para o Brasil. O financiamento do vendedor com entrada de 25% pode ser negociado para 20% considerando o mercado atual português.",
-        "O mercado imobiliário português cresceu 12% anualmente em localizações premium. Com base em vendas comparáveis no Algarve, renovação pode render lucro de 20-25%, especialmente com o visto D7 impulsionando a procura internacional e opções de financiamento flexíveis.",
-        "Analisei a situação do proprietário - precisa de venda rápida devido a relocalização para a Alemanha. A lei portuguesa permite termos de negociação flexíveis para financiamento do vendedor. Quer que sugira estratégias baseadas em transações similares com seller finance?",
-        "Propriedades nesta região do Norte de Portugal beneficiam de incentivos fiscais para renovação do interior. Tempo médio para vender propriedades fora do mercado é 18 dias, com forte procura de compradores nacionais e internacionais. Financiamento do vendedor acelera o processo.",
-        "O financiamento do vendedor em Portugal requer contrato específico (compra e venda com pagamento diferido). Taxa IMI não é afetada, mas requer notário. Golden Visa é compatível com seller finance. Quer detalhes sobre os aspectos legais?",
+        "I've identified 3 properties in Lisbon and Porto with seller financing available. Rates between 3.8-5.2% with down payments of 15-30%. The Portuguese market shows rental yields of 4-6% annually. Would you like me to analyze the potential ROI?",
+        "I can help draft a personalized message to the owner in Cascais. They seem motivated to sell due to emigration to Brazil. Seller financing with 25% down payment could be negotiated to 20% considering the current Portuguese market conditions.",
+        "The Portuguese real estate market has grown 12% annually in premium locations. Based on comparable sales in the Algarve, renovation could yield 20-25% profit, especially with the D7 visa driving international demand and flexible financing options.",
+        "I've analyzed the owner's situation - they need a quick sale due to relocation to Germany. Portuguese law allows flexible negotiation terms for seller financing. Would you like me to suggest strategies based on similar seller finance transactions?",
+        "Properties in this Northern Portugal region benefit from tax incentives for interior renovation. Average time to sell off-market properties is 18 days, with strong demand from both domestic and international buyers. Seller financing accelerates the process.",
+        "Seller financing in Portugal requires specific contracts (purchase and sale with deferred payment). IMI tax is not affected, but requires notary involvement. Golden Visa is compatible with seller finance. Would you like details on the legal aspects?",
       ];
       
       const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
@@ -74,7 +75,7 @@ const AIAssistant = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <Sparkles size={18} className="mr-2" />
-                <CardTitle className="text-base font-medium">Assistente IA - Portugal</CardTitle>
+                <CardTitle className="text-base font-medium">AI Assistant - Portugal</CardTitle>
               </div>
               <Button 
                 variant="ghost" 
@@ -125,7 +126,7 @@ const AIAssistant = () => {
           <CardFooter className="p-3 border-t">
             <div className="flex w-full items-center space-x-2">
               <Textarea 
-                placeholder="Pergunte sobre sourcing de propriedades e financiamento..."
+                placeholder="Ask about property sourcing and financing..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="min-h-[40px] resize-none"

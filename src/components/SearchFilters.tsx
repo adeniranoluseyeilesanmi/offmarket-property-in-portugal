@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,11 +24,11 @@ interface SearchFiltersProps {
 
 const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
   const [filters, setFilters] = useState({
-    location: 'Qualquer Localização',
-    propertyType: 'Qualquer Tipo',
+    location: 'Any Location',
+    propertyType: 'Any Type',
     minPrice: 0,
     maxPrice: 10000000,
-    bedrooms: 'Qualquer',
+    bedrooms: 'Any',
     aiMatchMin: 0,
     keywords: '',
     vendorFinancingOnly: false,
@@ -78,11 +79,11 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
 
   const handleReset = () => {
     const defaultFilters = {
-      location: 'Qualquer Localização',
-      propertyType: 'Qualquer Tipo',
+      location: 'Any Location',
+      propertyType: 'Any Type',
       minPrice: 0,
       maxPrice: 10000000,
-      bedrooms: 'Qualquer',
+      bedrooms: 'Any',
       aiMatchMin: 0,
       keywords: '',
       vendorFinancingOnly: false,
@@ -107,7 +108,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={(value) => handleFilterChange('location', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Localização" />
+              <SelectValue placeholder="Location" />
             </SelectTrigger>
             <SelectContent>
               {cities.map((city) => (
@@ -126,7 +127,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={(value) => handleFilterChange('propertyType', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Tipo de Propriedade" />
+              <SelectValue placeholder="Property Type" />
             </SelectTrigger>
             <SelectContent>
               {propertyTypes.map((type) => (
@@ -144,7 +145,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={handlePriceRangeSelect}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Faixa de Preço" />
+              <SelectValue placeholder="Price Range" />
             </SelectTrigger>
             <SelectContent>
               {priceRanges.map((range) => (
@@ -163,7 +164,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={(value) => handleFilterChange('bedrooms', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Quartos" />
+              <SelectValue placeholder="Bedrooms" />
             </SelectTrigger>
             <SelectContent>
               {bedroomOptions.map((option) => (
@@ -182,13 +183,13 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             variant="outline"
             onClick={handleReset}
           >
-            Limpar
+            Clear
           </Button>
           <Button 
             className="w-full"
             onClick={() => setIsAdvancedFiltersVisible(!isAdvancedFiltersVisible)}
           >
-            {isAdvancedFiltersVisible ? 'Menos Filtros' : 'Mais Filtros'}
+            {isAdvancedFiltersVisible ? 'Fewer Filters' : 'More Filters'}
           </Button>
         </div>
       </div>
@@ -199,7 +200,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
               <label className="block mb-2 text-sm font-medium">
-                Faixa de Preço: {filters.maxPrice === 10000000 ? 'Qualquer' : `Até €${(filters.maxPrice).toLocaleString()}`}
+                Price Range: {filters.maxPrice === 10000000 ? 'Any' : `Up to €${(filters.maxPrice).toLocaleString()}`}
               </label>
               <Slider 
                 defaultValue={[0]} 
@@ -213,7 +214,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
 
             <div>
               <label className="block mb-2 text-sm font-medium">
-                Score AI: {filters.aiMatchMin}%+
+                AI Score: {filters.aiMatchMin}%+
               </label>
               <Slider 
                 defaultValue={[0]} 
@@ -226,9 +227,9 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             </div>
 
             <div>
-              <label className="block mb-2 text-sm font-medium">Palavras-chave (endereço, descrição)</label>
+              <label className="block mb-2 text-sm font-medium">Keywords (address, description)</label>
               <Input 
-                placeholder="ex: jardim, renovação, venda rápida" 
+                placeholder="e.g. garden, renovation, quick sale" 
                 value={filters.keywords}
                 onChange={(e) => handleFilterChange('keywords', e.target.value)}
               />
@@ -236,7 +237,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
           </div>
 
           <div className="border-t pt-4">
-            <h3 className="text-sm font-medium mb-4 text-green-700">Filtros de Financiamento do Vendedor</h3>
+            <h3 className="text-sm font-medium mb-4 text-green-700">Seller Financing Filters</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="flex items-center space-x-2">
@@ -244,12 +245,12 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
                   checked={filters.vendorFinancingOnly}
                   onCheckedChange={(checked) => handleFilterChange('vendorFinancingOnly', checked)}
                 />
-                <label className="text-sm">Apenas com Financiamento do Vendedor</label>
+                <label className="text-sm">Only with Seller Financing</label>
               </div>
 
               <div>
                 <label className="block mb-2 text-sm font-medium">
-                  Entrada máxima: {downPaymentRange[0]}%
+                  Max Down Payment: {downPaymentRange[0]}%
                 </label>
                 <Slider 
                   value={downPaymentRange}
@@ -263,7 +264,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
 
               <div>
                 <label className="block mb-2 text-sm font-medium">
-                  Pagamento mensal máximo: €{monthlyPaymentRange[0] * 100}
+                  Max Monthly Payment: €{monthlyPaymentRange[0] * 100}
                 </label>
                 <Slider 
                   value={monthlyPaymentRange}
