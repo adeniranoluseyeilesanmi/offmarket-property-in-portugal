@@ -1,4 +1,3 @@
-
 import {
   Dialog,
   DialogContent,
@@ -13,9 +12,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Property } from "@/utils/mockData";
 import { formatCurrency, formatDate } from "@/utils/formatters";
-import { ChevronLeft, ChevronRight, Copy, MapPin, Phone, Mail } from "lucide-react";
+import { ChevronLeft, ChevronRight, Copy, MapPin, Phone, Mail, CreditCard } from "lucide-react";
 import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import FinancingCalculator from './FinancingCalculator';
 
 interface PropertyModalProps {
   property: Property;
@@ -68,6 +68,13 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
     });
   };
 
+  const handleFinancingInquiry = () => {
+    toast({
+      title: "Consulta de Financiamento Enviada",
+      description: "Your financing inquiry has been sent to the property owner",
+    });
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[800px] h-[90vh] flex flex-col p-0 overflow-hidden">
@@ -88,13 +95,21 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
                 </Button>
               </DialogDescription>
             </div>
-            <Badge className={`${getStatusColor(property.listedStatus)} ml-2`}>
-              {property.listedStatus === 'off-market' 
-                ? 'Off Market' 
-                : property.listedStatus === 'coming-soon' 
-                ? 'Coming Soon' 
-                : 'Lead'}
-            </Badge>
+            <div className="flex gap-2">
+              <Badge className={`${getStatusColor(property.listedStatus)}`}>
+                {property.listedStatus === 'off-market' 
+                  ? 'Fora do Mercado' 
+                  : property.listedStatus === 'coming-soon' 
+                  ? 'Em Breve' 
+                  : 'Lead'}
+              </Badge>
+              {property.vendorFinancing.available && (
+                <Badge className="bg-green-100 text-green-800 flex items-center gap-1">
+                  <CreditCard size={12} />
+                  Financ. Vendedor
+                </Badge>
+              )}
+            </div>
           </div>
         </DialogHeader>
 
@@ -126,50 +141,53 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
           {/* Property Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-gray-50 p-3 rounded-md">
-              <div className="text-sm text-gray-500">Price</div>
+              <div className="text-sm text-gray-500">Preço</div>
               <div className="font-bold">{formatCurrency(property.price)}</div>
             </div>
             <div className="bg-gray-50 p-3 rounded-md">
-              <div className="text-sm text-gray-500">Potential Value</div>
+              <div className="text-sm text-gray-500">Valor Potencial</div>
               <div className="font-bold">{formatCurrency(property.potentialValue)}</div>
             </div>
             <div className="bg-gray-50 p-3 rounded-md">
-              <div className="text-sm text-gray-500">AI Match Score</div>
+              <div className="text-sm text-gray-500">Score AI</div>
               <div className="font-bold flex items-center">
                 <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
                 {property.aiMatchScore}%
               </div>
             </div>
             <div className="bg-gray-50 p-3 rounded-md">
-              <div className="text-sm text-gray-500">Added</div>
+              <div className="text-sm text-gray-500">Adicionado</div>
               <div className="font-medium">{formatDate(property.dateAdded)}</div>
             </div>
           </div>
 
           <Tabs defaultValue="details">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="details">Property Details</TabsTrigger>
-              <TabsTrigger value="owner">Owner Info</TabsTrigger>
-              <TabsTrigger value="ai">AI Analysis</TabsTrigger>
+            <TabsList className={`grid w-full ${property.vendorFinancing.available ? 'grid-cols-4' : 'grid-cols-3'}`}>
+              <TabsTrigger value="details">Detalhes</TabsTrigger>
+              <TabsTrigger value="owner">Proprietário</TabsTrigger>
+              <TabsTrigger value="ai">Análise AI</TabsTrigger>
+              {property.vendorFinancing.available && (
+                <TabsTrigger value="financing">Financiamento</TabsTrigger>
+              )}
             </TabsList>
             
             <TabsContent value="details" className="pt-4">
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500">Property Type</h4>
+                    <h4 className="text-sm font-medium text-gray-500">Tipo de Propriedade</h4>
                     <p>{property.propertyType}</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500">Square Feet</h4>
-                    <p>{property.squareFeet} sq ft</p>
+                    <h4 className="text-sm font-medium text-gray-500">Área (m²)</h4>
+                    <p>{property.squareFeet} m²</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500">Bedrooms</h4>
+                    <h4 className="text-sm font-medium text-gray-500">Quartos</h4>
                     <p>{property.bedrooms}</p>
                   </div>
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500">Bathrooms</h4>
+                    <h4 className="text-sm font-medium text-gray-500">Casas de Banho</h4>
                     <p>{property.bathrooms}</p>
                   </div>
                 </div>
@@ -177,7 +195,7 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
                 <Separator />
                 
                 <div>
-                  <h4 className="text-sm font-medium text-gray-500 mb-2">Description</h4>
+                  <h4 className="text-sm font-medium text-gray-500 mb-2">Descrição</h4>
                   <p className="text-sm">{property.description}</p>
                 </div>
               </div>
@@ -186,10 +204,10 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
             <TabsContent value="owner" className="pt-4">
               <div className="space-y-4">
                 <div className="bg-gray-50 p-4 rounded-md">
-                  <h4 className="font-medium">Contact Information</h4>
+                  <h4 className="font-medium">Informações de Contacto</h4>
                   <div className="mt-2 space-y-2">
                     <div className="flex items-center">
-                      <span className="text-gray-500 mr-2">Name:</span>
+                      <span className="text-gray-500 mr-2">Nome:</span>
                       <span>{property.ownerInfo.name}</span>
                     </div>
                     <div className="flex items-center">
@@ -205,7 +223,7 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
                 
                 {property.ownerInfo.situation && (
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 mb-2">Owner Situation</h4>
+                    <h4 className="text-sm font-medium text-gray-500 mb-2">Situação do Proprietário</h4>
                     <p className="text-sm">{property.ownerInfo.situation}</p>
                   </div>
                 )}
@@ -221,27 +239,82 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
                         <path d="M12 8V4m-1 2.5h2M4 10h4m-2 1V8m14 2h-4m2 1V8m-7 14a7 7 0 1 1 0-14 7 7 0 0 1 0 14z"/>
                       </svg>
                     </span>
-                    AI Analysis
+                    Análise AI
                   </h4>
                   <div className="mt-2 text-sm space-y-2">
-                    <p>This property has a <strong>high match score of {property.aiMatchScore}%</strong> based on your criteria for the Portuguese market.</p>
-                    <p>Potential profit: <strong>{formatCurrency(property.potentialValue - property.price)}</strong> after standard renovations and Portuguese market appreciation.</p>
-                    <p>The seller appears <strong>motivated</strong> due to {property.ownerInfo.situation?.toLowerCase()}. Portuguese off-market properties typically sell at 8-15% below market value.</p>
-                    <p>Similar properties in this Portuguese region typically receive multiple offers within 21 days of off-market listing.</p>
+                    <p>Esta propriedade tem uma <strong>pontuação alta de {property.aiMatchScore}%</strong> baseada nos seus critérios para o mercado português.</p>
+                    <p>Lucro potencial: <strong>{formatCurrency(property.potentialValue - property.price)}</strong> após renovações padrão e valorização do mercado português.</p>
+                    <p>O vendedor parece <strong>motivado</strong> devido a {property.ownerInfo.situation?.toLowerCase()}. Propriedades fora do mercado em Portugal normalmente vendem 8-15% abaixo do valor de mercado.</p>
+                    <p>Propriedades similares nesta região portuguesa normalmente recebem múltiplas ofertas dentro de 21 dias de listagem fora do mercado.</p>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 p-4 rounded-md">
-                  <h4 className="font-medium">Portuguese Market Insights</h4>
+                  <h4 className="font-medium">Insights do Mercado Português</h4>
                   <div className="mt-2 text-sm">
-                    <p>Properties in {property.city} have appreciated 8.5% year-over-year, driven by the Golden Visa and D7 programs.</p>
-                    <p className="mt-1">Average days on market: 28 days</p>
-                    <p className="mt-1">International buyer demand in this area: <strong>High</strong></p>
-                    <p className="mt-1">Rental yield potential: <strong>4.5-6.2%</strong> annually</p>
+                    <p>Propriedades em {property.city} valorizaram 8,5% ano a ano, impulsionadas pelos programas Golden Visa e D7.</p>
+                    <p className="mt-1">Dias médios no mercado: 28 dias</p>
+                    <p className="mt-1">Procura de compradores internacionais nesta área: <strong>Alta</strong></p>
+                    <p className="mt-1">Potencial de rendimento de arrendamento: <strong>4,5-6,2%</strong> anualmente</p>
                   </div>
                 </div>
               </div>
             </TabsContent>
+
+            {property.vendorFinancing.available && (
+              <TabsContent value="financing" className="pt-4">
+                <div className="space-y-6">
+                  <div className="bg-green-50 p-4 rounded-md">
+                    <h4 className="font-medium flex items-center mb-2">
+                      <CreditCard size={16} className="mr-2 text-green-600" />
+                      Financiamento do Vendedor Disponível
+                    </h4>
+                    <p className="text-sm text-green-700 mb-3">{property.vendorFinancing.reasonForOffering}</p>
+                    
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-gray-500">Entrada mínima:</span>
+                        <span className="font-medium ml-2">{property.vendorFinancing.downPaymentRequired}%</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Taxa de juro:</span>
+                        <span className="font-medium ml-2">{property.vendorFinancing.interestRate}%</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Prazo máximo:</span>
+                        <span className="font-medium ml-2">{property.vendorFinancing.termYears} anos</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Pagamento mensal:</span>
+                        <span className="font-medium ml-2">{formatCurrency(property.vendorFinancing.monthlyPayment || 0)}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <FinancingCalculator 
+                    propertyPrice={property.price}
+                    vendorFinancing={property.vendorFinancing}
+                  />
+
+                  <div className="bg-amber-50 p-4 rounded-md">
+                    <h4 className="font-medium mb-2">Condições e Requisitos</h4>
+                    <ul className="text-sm space-y-1">
+                      {property.vendorFinancing.conditions.map((condition, index) => (
+                        <li key={index} className="flex items-start">
+                          <span className="text-amber-600 mr-2">•</span>
+                          {condition}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
+                    <p className="mb-1"><strong>Aviso Legal:</strong> O financiamento do vendedor está sujeito a aprovação e verificação financeira.</p>
+                    <p>Recomenda-se consulta com advogado especializado em direito imobiliário português antes de prosseguir.</p>
+                  </div>
+                </div>
+              </TabsContent>
+            )}
           </Tabs>
         </div>
 
@@ -249,8 +322,14 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
           <Button variant="outline" onClick={onClose} className="mr-2">
             Fechar
           </Button>
+          {property.vendorFinancing.available && (
+            <Button variant="outline" onClick={handleFinancingInquiry} className="mr-2">
+              <CreditCard size={16} className="mr-1" />
+              Consulta Financiamento
+            </Button>
+          )}
           <Button onClick={handleContactOwner}>
-            Contact Owner
+            Contactar Proprietário
           </Button>
         </DialogFooter>
       </DialogContent>

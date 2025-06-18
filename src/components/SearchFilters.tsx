@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import {
   Select,
   SelectContent,
@@ -23,17 +23,22 @@ interface SearchFiltersProps {
 
 const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
   const [filters, setFilters] = useState({
-    location: 'Any Location',
-    propertyType: 'Any Type',
+    location: 'Qualquer Localização',
+    propertyType: 'Qualquer Tipo',
     minPrice: 0,
     maxPrice: 10000000,
-    bedrooms: 'Any',
+    bedrooms: 'Qualquer',
     aiMatchMin: 0,
     keywords: '',
+    vendorFinancingOnly: false,
+    maxDownPayment: 50,
+    maxMonthlyPayment: 10000,
   });
 
   const [priceRange, setPriceRange] = useState([0]);
   const [aiMatchRange, setAiMatchRange] = useState([0]);
+  const [downPaymentRange, setDownPaymentRange] = useState([50]);
+  const [monthlyPaymentRange, setMonthlyPaymentRange] = useState([100]);
   const [isAdvancedFiltersVisible, setIsAdvancedFiltersVisible] = useState(false);
 
   const handleFilterChange = (key: string, value: any) => {
@@ -61,19 +66,34 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
     handleFilterChange('aiMatchMin', newValue[0]);
   };
 
+  const handleDownPaymentSliderChange = (newValue: number[]) => {
+    setDownPaymentRange(newValue);
+    handleFilterChange('maxDownPayment', newValue[0]);
+  };
+
+  const handleMonthlyPaymentSliderChange = (newValue: number[]) => {
+    setMonthlyPaymentRange(newValue);
+    handleFilterChange('maxMonthlyPayment', newValue[0] * 100);
+  };
+
   const handleReset = () => {
     const defaultFilters = {
-      location: 'Any Location',
-      propertyType: 'Any Type',
+      location: 'Qualquer Localização',
+      propertyType: 'Qualquer Tipo',
       minPrice: 0,
       maxPrice: 10000000,
-      bedrooms: 'Any',
+      bedrooms: 'Qualquer',
       aiMatchMin: 0,
       keywords: '',
+      vendorFinancingOnly: false,
+      maxDownPayment: 50,
+      maxMonthlyPayment: 10000,
     };
     setFilters(defaultFilters);
     setPriceRange([0]);
     setAiMatchRange([0]);
+    setDownPaymentRange([50]);
+    setMonthlyPaymentRange([100]);
     onFilterChange(defaultFilters);
   };
 
@@ -87,7 +107,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={(value) => handleFilterChange('location', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Location" />
+              <SelectValue placeholder="Localização" />
             </SelectTrigger>
             <SelectContent>
               {cities.map((city) => (
@@ -106,7 +126,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={(value) => handleFilterChange('propertyType', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Property Type" />
+              <SelectValue placeholder="Tipo de Propriedade" />
             </SelectTrigger>
             <SelectContent>
               {propertyTypes.map((type) => (
@@ -124,7 +144,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={handlePriceRangeSelect}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Price Range" />
+              <SelectValue placeholder="Faixa de Preço" />
             </SelectTrigger>
             <SelectContent>
               {priceRanges.map((range) => (
@@ -143,7 +163,7 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             onValueChange={(value) => handleFilterChange('bedrooms', value)}
           >
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Bedrooms" />
+              <SelectValue placeholder="Quartos" />
             </SelectTrigger>
             <SelectContent>
               {bedroomOptions.map((option) => (
@@ -162,55 +182,99 @@ const SearchFilters = ({ onFilterChange }: SearchFiltersProps) => {
             variant="outline"
             onClick={handleReset}
           >
-            Reset
+            Limpar
           </Button>
           <Button 
             className="w-full"
             onClick={() => setIsAdvancedFiltersVisible(!isAdvancedFiltersVisible)}
           >
-            {isAdvancedFiltersVisible ? 'Less Filters' : 'More Filters'}
+            {isAdvancedFiltersVisible ? 'Menos Filtros' : 'Mais Filtros'}
           </Button>
         </div>
       </div>
 
       {/* Advanced Filters */}
       {isAdvancedFiltersVisible && (
-        <div className="mt-4 pt-4 border-t grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block mb-2 text-sm font-medium">
-              Price Range: {filters.maxPrice === 10000000 ? 'Any' : `Up to £${(filters.maxPrice).toLocaleString()}`}
-            </label>
-            <Slider 
-              defaultValue={[0]} 
-              max={100} 
-              step={1} 
-              value={priceRange}
-              onValueChange={handlePriceSliderChange}
-              className="py-4"
-            />
+        <div className="mt-4 pt-4 border-t space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label className="block mb-2 text-sm font-medium">
+                Faixa de Preço: {filters.maxPrice === 10000000 ? 'Qualquer' : `Até €${(filters.maxPrice).toLocaleString()}`}
+              </label>
+              <Slider 
+                defaultValue={[0]} 
+                max={100} 
+                step={1} 
+                value={priceRange}
+                onValueChange={handlePriceSliderChange}
+                className="py-4"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">
+                Score AI: {filters.aiMatchMin}%+
+              </label>
+              <Slider 
+                defaultValue={[0]} 
+                max={100} 
+                step={5} 
+                value={aiMatchRange}
+                onValueChange={handleAiMatchSliderChange}
+                className="py-4"
+              />
+            </div>
+
+            <div>
+              <label className="block mb-2 text-sm font-medium">Palavras-chave (endereço, descrição)</label>
+              <Input 
+                placeholder="ex: jardim, renovação, venda rápida" 
+                value={filters.keywords}
+                onChange={(e) => handleFilterChange('keywords', e.target.value)}
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium">
-              AI Match Score: {filters.aiMatchMin}%+
-            </label>
-            <Slider 
-              defaultValue={[0]} 
-              max={100} 
-              step={5} 
-              value={aiMatchRange}
-              onValueChange={handleAiMatchSliderChange}
-              className="py-4"
-            />
-          </div>
+          <div className="border-t pt-4">
+            <h3 className="text-sm font-medium mb-4 text-green-700">Filtros de Financiamento do Vendedor</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="flex items-center space-x-2">
+                <Switch 
+                  checked={filters.vendorFinancingOnly}
+                  onCheckedChange={(checked) => handleFilterChange('vendorFinancingOnly', checked)}
+                />
+                <label className="text-sm">Apenas com Financiamento do Vendedor</label>
+              </div>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium">Keywords (address, description)</label>
-            <Input 
-              placeholder="e.g. garden, renovation, quick sale" 
-              value={filters.keywords}
-              onChange={(e) => handleFilterChange('keywords', e.target.value)}
-            />
+              <div>
+                <label className="block mb-2 text-sm font-medium">
+                  Entrada máxima: {downPaymentRange[0]}%
+                </label>
+                <Slider 
+                  value={downPaymentRange}
+                  onValueChange={handleDownPaymentSliderChange}
+                  max={50}
+                  min={10}
+                  step={5}
+                  className="py-4"
+                />
+              </div>
+
+              <div>
+                <label className="block mb-2 text-sm font-medium">
+                  Pagamento mensal máximo: €{monthlyPaymentRange[0] * 100}
+                </label>
+                <Slider 
+                  value={monthlyPaymentRange}
+                  onValueChange={handleMonthlyPaymentSliderChange}
+                  max={50}
+                  min={5}
+                  step={5}
+                  className="py-4"
+                />
+              </div>
+            </div>
           </div>
         </div>
       )}

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -19,7 +18,7 @@ const AIAssistant = () => {
   const [conversation, setConversation] = useState<{role: string, content: string}[]>([
     {
       role: "assistant",
-      content: "Olá! I'm your AI property sourcing assistant for the Portuguese market. I can help you find off-market properties, analyze potential deals, connect with property owners, and provide market insights across Portugal. Como posso ajudar hoje?"
+      content: "Olá! Sou o seu assistente de IA para sourcing de propriedades no mercado português. Posso ajudá-lo a encontrar propriedades fora do mercado, analisar negócios potenciais, conectar com proprietários, e fornecer insights sobre financiamento do vendedor e o mercado português. Como posso ajudar hoje?"
     }
   ]);
 
@@ -37,11 +36,12 @@ const AIAssistant = () => {
     // Simulate AI response after a delay
     setTimeout(() => {
       const aiResponses = [
-        "Based on your criteria, I've identified 5 potential off-market properties in Lisbon and Porto that match your investment goals. The Portuguese market shows strong rental yields of 4-6% annually. Shall I analyze their ROI potential?",
-        "I can help you draft a personalized message to the property owner in Cascais. They appear motivated to sell due to emigration to Brazil. Consider making an offer 8-12% below asking price, which is typical for off-market deals in Portugal.",
-        "The Portuguese property market has seen 12% annual growth in prime locations. Based on comparable sales in this area of the Algarve, renovation could yield a 20-25% profit margin, especially with the D7 visa driving international demand.",
-        "I've analyzed the owner's situation - they need a quick sale due to business relocation to Germany. Portuguese property law allows for flexible negotiation terms. Would you like me to suggest negotiation strategies based on similar transactions?",
-        "Properties in this region of Northern Portugal benefit from the interior renovation tax incentives. Average time to sell off-market properties here is 18 days, with strong demand from both domestic and international buyers.",
+        "Identifiquei 3 propriedades em Lisboa e Porto com financiamento do vendedor disponível. Taxas entre 3,8-5,2% com entradas de 15-30%. O mercado português mostra rendimentos de arrendamento de 4-6% anualmente. Quer que analise o potencial ROI?",
+        "Posso ajudar a redigir uma mensagem personalizada ao proprietário em Cascais. Parece motivado para vender devido a emigração para o Brasil. O financiamento do vendedor com entrada de 25% pode ser negociado para 20% considerando o mercado atual português.",
+        "O mercado imobiliário português cresceu 12% anualmente em localizações premium. Com base em vendas comparáveis no Algarve, renovação pode render lucro de 20-25%, especialmente com o visto D7 impulsionando a procura internacional e opções de financiamento flexíveis.",
+        "Analisei a situação do proprietário - precisa de venda rápida devido a relocalização para a Alemanha. A lei portuguesa permite termos de negociação flexíveis para financiamento do vendedor. Quer que sugira estratégias baseadas em transações similares com seller finance?",
+        "Propriedades nesta região do Norte de Portugal beneficiam de incentivos fiscais para renovação do interior. Tempo médio para vender propriedades fora do mercado é 18 dias, com forte procura de compradores nacionais e internacionais. Financiamento do vendedor acelera o processo.",
+        "O financiamento do vendedor em Portugal requer contrato específico (compra e venda com pagamento diferido). Taxa IMI não é afetada, mas requer notário. Golden Visa é compatível com seller finance. Quer detalhes sobre os aspectos legais?",
       ];
       
       const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
@@ -74,7 +74,7 @@ const AIAssistant = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <Sparkles size={18} className="mr-2" />
-                <CardTitle className="text-base font-medium">AI Property Assistant - Portugal</CardTitle>
+                <CardTitle className="text-base font-medium">Assistente IA - Portugal</CardTitle>
               </div>
               <Button 
                 variant="ghost" 
@@ -125,7 +125,7 @@ const AIAssistant = () => {
           <CardFooter className="p-3 border-t">
             <div className="flex w-full items-center space-x-2">
               <Textarea 
-                placeholder="Ask anything about property sourcing..."
+                placeholder="Pergunte sobre sourcing de propriedades e financiamento..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 className="min-h-[40px] resize-none"

@@ -1,3 +1,12 @@
+export interface VendorFinancing {
+  available: boolean;
+  downPaymentRequired: number; // percentage
+  interestRate: number; // percentage
+  termYears: number;
+  monthlyPayment?: number;
+  conditions: string[];
+  reasonForOffering: string;
+}
 
 export interface Property {
   id: string;
@@ -23,186 +32,238 @@ export interface Property {
   dateAdded: string;
   lastContact?: string;
   notes?: string;
+  vendorFinancing: VendorFinancing;
 }
 
 export const mockProperties: Property[] = [
   {
     id: '1',
-    address: '123 Wisteria Lane',
-    city: 'Manchester',
-    postcode: 'M1 2AB',
+    address: 'Rua das Flores, 123',
+    city: 'Lisboa',
+    postcode: '1200-192',
     price: 450000,
     bedrooms: 4,
     bathrooms: 2,
-    propertyType: 'Detached House',
+    propertyType: 'Moradia Isolada',
     squareFeet: 2100,
-    description: 'Beautiful detached property with garden in need of minor renovations. Owner relocating for work and looking for a quick sale. Property has been in the family for 15 years.',
+    description: 'Bela moradia isolada com jardim necessitando de pequenas renovações. Proprietário relocando-se por trabalho e procurando venda rápida. Propriedade na família há 15 anos.',
     ownerInfo: {
-      name: 'James Wilson',
-      contact: '07700 900123',
-      email: 'james.wilson@example.com',
-      situation: 'Relocating for work'
+      name: 'João Silva',
+      contact: '+351 912 345 678',
+      email: 'joao.silva@exemplo.com',
+      situation: 'Relocação por trabalho'
     },
     images: ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80'],
     aiMatchScore: 92,
     potentialValue: 520000,
     listedStatus: 'off-market',
-    dateAdded: '2023-10-15'
+    dateAdded: '2023-10-15',
+    vendorFinancing: {
+      available: true,
+      downPaymentRequired: 25,
+      interestRate: 4.5,
+      termYears: 15,
+      monthlyPayment: 2584,
+      conditions: ['Entrada mínima 25%', 'Seguro de vida obrigatório', 'Escritura em 30 dias'],
+      reasonForOffering: 'Necessidade de liquidez rápida para nova aquisição'
+    }
   },
   {
     id: '2',
-    address: '45 Park Avenue',
-    city: 'Liverpool',
-    postcode: 'L3 9YZ',
+    address: 'Avenida da Liberdade, 45',
+    city: 'Porto',
+    postcode: '4000-322',
     price: 325000,
     bedrooms: 3,
     bathrooms: 1,
-    propertyType: 'Semi-Detached',
+    propertyType: 'Moradia Geminada',
     squareFeet: 1500,
-    description: 'Charming semi-detached property in a quiet neighborhood. Current owners are looking to downsize now that children have moved out. Property has great potential for extension.',
+    description: 'Encantadora moradia geminada em bairro tranquilo. Proprietários procuram reduzir agora que os filhos saíram de casa. Propriedade com grande potencial para ampliação.',
     ownerInfo: {
-      name: 'Sarah Johnson',
-      contact: '07700 900456',
-      email: 'sarah.j@example.com',
-      situation: 'Downsizing'
+      name: 'Maria Santos',
+      contact: '+351 918 765 432',
+      email: 'maria.s@exemplo.com',
+      situation: 'Redução de tamanho'
     },
     images: ['https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80'],
     aiMatchScore: 87,
     potentialValue: 380000,
     listedStatus: 'coming-soon',
-    dateAdded: '2023-11-02'
+    dateAdded: '2023-11-02',
+    vendorFinancing: {
+      available: false,
+      downPaymentRequired: 0,
+      interestRate: 0,
+      termYears: 0,
+      conditions: [],
+      reasonForOffering: ''
+    }
   },
   {
     id: '3',
-    address: '7 Oakwood Drive',
-    city: 'Birmingham',
-    postcode: 'B1 1TA',
+    address: 'Quinta do Sol, 7',
+    city: 'Braga',
+    postcode: '4700-123',
     price: 550000,
     bedrooms: 5,
     bathrooms: 3,
-    propertyType: 'Detached House',
+    propertyType: 'Moradia Isolada',
     squareFeet: 2800,
-    description: 'Large family home with extensive gardens and a double garage. Owners are retiring and planning to move abroad. Some modernization required but excellent structure.',
+    description: 'Grande casa familiar com extensos jardins e garagem dupla. Proprietários reformando-se e planejando mudar-se para o estrangeiro. Alguma modernização necessária mas excelente estrutura.',
     ownerInfo: {
-      name: 'Robert & Mary Taylor',
-      contact: '07700 900789',
-      email: 'r.taylor@example.com',
-      situation: 'Retiring abroad'
+      name: 'Roberto & Ana Costa',
+      contact: '+351 933 456 789',
+      email: 'r.costa@exemplo.com',
+      situation: 'Reforma no estrangeiro'
     },
     images: ['https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80'],
     aiMatchScore: 95,
     potentialValue: 650000,
     listedStatus: 'off-market',
-    dateAdded: '2023-09-28'
+    dateAdded: '2023-09-28',
+    vendorFinancing: {
+      available: true,
+      downPaymentRequired: 30,
+      interestRate: 5.2,
+      termYears: 20,
+      monthlyPayment: 2563,
+      conditions: ['Entrada 30%', 'Taxa fixa por 5 anos', 'Avaliação bancária necessária'],
+      reasonForOffering: 'Facilitar venda rápida antes da mudança'
+    }
   },
   {
     id: '4',
-    address: '15 Victoria Street',
-    city: 'London',
-    postcode: 'E1 6TD',
+    address: 'Rua Augusta, 15',
+    city: 'Lisboa',
+    postcode: '1100-048',
     price: 720000,
     bedrooms: 2,
     bathrooms: 2,
-    propertyType: 'Apartment',
+    propertyType: 'Apartamento',
     squareFeet: 950,
-    description: 'Modern apartment in a prime location. Owner has inherited another property and is motivated to sell quickly. Property has been completely renovated 2 years ago.',
+    description: 'Apartamento moderno em localização premium. Proprietário herdou outro imóvel e está motivado para vender rapidamente. Propriedade completamente renovada há 2 anos.',
     ownerInfo: {
-      name: 'Daniel Smith',
-      contact: '07700 900234',
-      email: 'd.smith@example.com',
-      situation: 'Inherited another property'
+      name: 'Carlos Oliveira',
+      contact: '+351 924 567 890',
+      email: 'c.oliveira@exemplo.com',
+      situation: 'Herdou outro imóvel'
     },
     images: ['https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2940&q=80'],
     aiMatchScore: 89,
     potentialValue: 795000,
     listedStatus: 'lead',
-    dateAdded: '2023-11-10'
+    dateAdded: '2023-11-10',
+    vendorFinancing: {
+      available: true,
+      downPaymentRequired: 20,
+      interestRate: 3.8,
+      termYears: 25,
+      monthlyPayment: 2688,
+      conditions: ['Entrada mínima 20%', 'Rendimento comprovado', 'Seguro habitação'],
+      reasonForOffering: 'Investimento em novo negócio'
+    }
   },
   {
     id: '5',
-    address: '22 Hill Road',
-    city: 'Bristol',
-    postcode: 'BS1 4QP',
+    address: 'Travessa da Paz, 22',
+    city: 'Coimbra',
+    postcode: '3000-456',
     price: 400000,
     bedrooms: 3,
     bathrooms: 2,
-    propertyType: 'Terraced House',
+    propertyType: 'Moradia em Banda',
     squareFeet: 1600,
-    description: 'Beautifully maintained period terraced house with original features. Owners are separating and need to sell within the next few months.',
+    description: 'Casa de época lindamente mantida com características originais. Proprietários separando-se e precisam vender nos próximos meses.',
     ownerInfo: {
-      name: 'Lisa Brown',
-      contact: '07700 900567',
-      email: 'lisa.b@example.com',
-      situation: 'Divorce/Separation'
+      name: 'Luísa Ferreira',
+      contact: '+351 917 678 901',
+      email: 'luisa.f@exemplo.com',
+      situation: 'Divórcio/Separação'
     },
     images: ['https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80'],
     aiMatchScore: 91,
     potentialValue: 460000,
     listedStatus: 'off-market',
-    dateAdded: '2023-10-05'
+    dateAdded: '2023-10-05',
+    vendorFinancing: {
+      available: false,
+      downPaymentRequired: 0,
+      interestRate: 0,
+      termYears: 0,
+      conditions: [],
+      reasonForOffering: ''
+    }
   },
   {
     id: '6',
-    address: '8 Riverside Apartments',
-    city: 'Manchester',
-    postcode: 'M3 4BT',
+    address: 'Apartamentos Riverside, 8',
+    city: 'Porto',
+    postcode: '4150-123',
     price: 280000,
     bedrooms: 2,
     bathrooms: 1,
-    propertyType: 'Apartment',
+    propertyType: 'Apartamento',
     squareFeet: 850,
-    description: 'Modern riverside apartment with balcony and secure parking. Current owner is an investor looking to liquidate assets for a new venture.',
+    description: 'Apartamento moderno junto ao rio com varanda e estacionamento seguro. Atual proprietário é um investidor procurando liquidar ativos para novo empreendimento.',
     ownerInfo: {
-      name: 'Thomas Green',
-      contact: '07700 900890',
-      email: 't.green@example.com',
-      situation: 'Investment liquidation'
+      name: 'Tomás Verde',
+      contact: '+351 935 789 012',
+      email: 't.verde@exemplo.com',
+      situation: 'Liquidação de investimento'
     },
     images: ['https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80'],
     aiMatchScore: 84,
     potentialValue: 310000,
     listedStatus: 'coming-soon',
-    dateAdded: '2023-11-15'
+    dateAdded: '2023-11-15',
+    vendorFinancing: {
+      available: true,
+      downPaymentRequired: 15,
+      interestRate: 4.2,
+      termYears: 30,
+      monthlyPayment: 1169,
+      conditions: ['Entrada flexível a partir de 15%', 'Taxa variável após 3 anos'],
+      reasonForOffering: 'Necessita de capital para novo projeto'
+    }
   }
 ];
 
 export const propertyTypes = [
-  'Any Type',
-  'Detached House',
-  'Semi-Detached',
-  'Terraced House',
-  'Apartment',
+  'Qualquer Tipo',
+  'Moradia Isolada',
+  'Moradia Geminada',
+  'Moradia em Banda',
+  'Apartamento',
   'Bungalow',
-  'Cottage',
-  'Mansion',
-  'Farm',
-  'Land'
+  'Quinta',
+  'Mansão',
+  'Terreno'
 ];
 
 export const cities = [
-  'Any Location',
-  'London',
-  'Manchester',
-  'Birmingham',
-  'Liverpool',
-  'Bristol',
-  'Leeds',
-  'Edinburgh',
-  'Glasgow',
-  'Cardiff',
-  'Belfast'
+  'Qualquer Localização',
+  'Lisboa',
+  'Porto',
+  'Braga',
+  'Coimbra',
+  'Aveiro',
+  'Faro',
+  'Évora',
+  'Viseu',
+  'Leiria',
+  'Setúbal'
 ];
 
 export const priceRanges = [
-  { min: 0, max: 250000, label: 'Under £250,000' },
-  { min: 250000, max: 500000, label: '£250,000 - £500,000' },
-  { min: 500000, max: 750000, label: '£500,000 - £750,000' },
-  { min: 750000, max: 1000000, label: '£750,000 - £1,000,000' },
-  { min: 1000000, max: 10000000, label: 'Over £1,000,000' }
+  { min: 0, max: 250000, label: 'Abaixo de €250.000' },
+  { min: 250000, max: 500000, label: '€250.000 - €500.000' },
+  { min: 500000, max: 750000, label: '€500.000 - €750.000' },
+  { min: 750000, max: 1000000, label: '€750.000 - €1.000.000' },
+  { min: 1000000, max: 10000000, label: 'Acima de €1.000.000' }
 ];
 
 export const bedroomOptions = [
-  'Any',
+  'Qualquer',
   '1+',
   '2+',
   '3+',

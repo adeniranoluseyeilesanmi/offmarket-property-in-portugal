@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import SearchFilters from "@/components/SearchFilters";
@@ -28,12 +27,12 @@ const Index = () => {
     let results = [...properties];
     
     // Apply location filter
-    if (filters.location !== 'Any Location') {
+    if (filters.location !== 'Qualquer Localização') {
       results = results.filter(property => property.city === filters.location);
     }
     
     // Apply property type filter
-    if (filters.propertyType !== 'Any Type') {
+    if (filters.propertyType !== 'Qualquer Tipo') {
       results = results.filter(property => property.propertyType === filters.propertyType);
     }
     
@@ -43,13 +42,34 @@ const Index = () => {
     );
     
     // Apply bedrooms filter
-    if (filters.bedrooms !== 'Any') {
+    if (filters.bedrooms !== 'Qualquer') {
       const minBedrooms = parseInt(filters.bedrooms.replace('+', ''));
       results = results.filter(property => property.bedrooms >= minBedrooms);
     }
     
     // Apply AI match score filter
     results = results.filter(property => property.aiMatchScore >= filters.aiMatchMin);
+    
+    // Apply vendor financing filter
+    if (filters.vendorFinancingOnly) {
+      results = results.filter(property => property.vendorFinancing.available);
+    }
+    
+    // Apply down payment filter (only for properties with vendor financing)
+    if (filters.vendorFinancingOnly && filters.maxDownPayment < 50) {
+      results = results.filter(property => 
+        property.vendorFinancing.available && 
+        property.vendorFinancing.downPaymentRequired <= filters.maxDownPayment
+      );
+    }
+    
+    // Apply monthly payment filter (only for properties with vendor financing)
+    if (filters.vendorFinancingOnly && filters.maxMonthlyPayment < 10000) {
+      results = results.filter(property => 
+        property.vendorFinancing.available && 
+        (property.vendorFinancing.monthlyPayment || 0) <= filters.maxMonthlyPayment
+      );
+    }
     
     // Apply keyword filter
     if (filters.keywords.trim()) {
@@ -79,16 +99,16 @@ const Index = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-property-navy">Off-Market Properties in Portugal</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-property-navy">Propriedades Fora do Mercado em Portugal</h1>
           <div className="flex space-x-2">
             <Button variant="outline" size="sm" className="hidden md:flex">
-              <Download size={16} className="mr-1" /> Export
+              <Download size={16} className="mr-1" /> Exportar
             </Button>
             <Button variant="outline" size="sm" className="hidden md:flex">
-              <BarChartIcon size={16} className="mr-1" /> Reports
+              <BarChartIcon size={16} className="mr-1" /> Relatórios
             </Button>
             <Button size="sm" onClick={handleRefresh}>
-              <RefreshCw size={16} className="mr-1" /> Refresh
+              <RefreshCw size={16} className="mr-1" /> Atualizar
             </Button>
           </div>
         </div>
@@ -125,12 +145,12 @@ const Index = () => {
                 <div className="bg-gray-100 p-4 rounded-full mb-4">
                   <FileText size={28} className="text-property-gray" />
                 </div>
-                <h3 className="text-lg font-medium mb-1">No properties found</h3>
+                <h3 className="text-lg font-medium mb-1">Nenhuma propriedade encontrada</h3>
                 <p className="text-gray-500 text-center mb-6 max-w-md">
-                  No properties match your current filters. Try adjusting your search criteria or adding a new property.
+                  Nenhuma propriedade corresponde aos seus filtros atuais. Tente ajustar os seus critérios de pesquisa ou adicionar uma nova propriedade.
                 </p>
                 <Button size="sm" className="flex items-center">
-                  <Plus size={16} className="mr-1" /> Add Property
+                  <Plus size={16} className="mr-1" /> Adicionar Propriedade
                 </Button>
               </div>
             )}

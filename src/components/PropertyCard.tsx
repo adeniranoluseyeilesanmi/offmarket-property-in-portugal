@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart } from "lucide-react";
+import { Heart, CreditCard } from "lucide-react";
 import { Property } from "@/utils/mockData";
 import { formatCurrency } from "@/utils/formatters";
 import PropertyModal from './PropertyModal';
@@ -31,7 +31,7 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
   return (
     <>
       <Card 
-        className="overflow-hidden property-card-shadow"
+        className="overflow-hidden property-card-shadow cursor-pointer"
         onClick={() => setIsModalOpen(true)}
       >
         <div className="relative h-48 overflow-hidden">
@@ -53,11 +53,17 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
               stroke={isFavorite ? "#ef4444" : "currentColor"}
             />
           </button>
-          <div className="absolute bottom-3 left-3">
+          <div className="absolute bottom-3 left-3 flex gap-2">
             <Badge className={`${getStatusColor(property.listedStatus)}`}>
-              {property.listedStatus === 'off-market' ? 'Off Market' : 
-               property.listedStatus === 'coming-soon' ? 'Coming Soon' : 'Lead'}
+              {property.listedStatus === 'off-market' ? 'Fora do Mercado' : 
+               property.listedStatus === 'coming-soon' ? 'Em Breve' : 'Lead'}
             </Badge>
+            {property.vendorFinancing.available && (
+              <Badge className="bg-green-100 text-green-800 flex items-center gap-1">
+                <CreditCard size={12} />
+                Financ. Vendedor
+              </Badge>
+            )}
           </div>
         </div>
         <CardContent className="p-4">
@@ -65,11 +71,18 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             <h3 className="font-semibold text-lg truncate">{property.address}</h3>
           </div>
           <div className="text-sm text-gray-500 mb-3">{property.city}, {property.postcode}</div>
-          <div className="font-bold text-lg text-property-navy mb-3">{formatCurrency(property.price)}</div>
+          <div className="font-bold text-lg text-property-navy mb-2">{formatCurrency(property.price)}</div>
+          
+          {property.vendorFinancing.available && (
+            <div className="text-sm text-green-600 mb-2">
+              Entrada: {property.vendorFinancing.downPaymentRequired}% • Taxa: {property.vendorFinancing.interestRate}%
+            </div>
+          )}
+          
           <div className="flex justify-between items-center text-sm">
             <div className="flex space-x-3">
-              <span>{property.bedrooms} beds</span>
-              <span>{property.bathrooms} baths</span>
+              <span>{property.bedrooms} quartos</span>
+              <span>{property.bathrooms} wcs</span>
             </div>
             <div className="flex items-center">
               <span className="inline-block w-2 h-2 rounded-full bg-green-500 mr-1.5"></span>
