@@ -79,7 +79,7 @@ const Index = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-property-navy">Off-Market Properties</h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-property-navy">Off-Market Properties in Portugal</h1>
           <div className="flex space-x-2">
             <Button variant="outline" size="sm" className="hidden md:flex">
               <Download size={16} className="mr-1" /> Export

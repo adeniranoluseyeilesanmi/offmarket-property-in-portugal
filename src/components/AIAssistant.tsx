@@ -19,7 +19,7 @@ const AIAssistant = () => {
   const [conversation, setConversation] = useState<{role: string, content: string}[]>([
     {
       role: "assistant",
-      content: "Hi! I'm your AI property sourcing assistant. I can help you find off-market properties, analyze potential deals, or contact property owners. What would you like help with today?"
+      content: "Olá! I'm your AI property sourcing assistant for the Portuguese market. I can help you find off-market properties, analyze potential deals, connect with property owners, and provide market insights across Portugal. Como posso ajudar hoje?"
     }
   ]);
 
@@ -37,10 +37,11 @@ const AIAssistant = () => {
     // Simulate AI response after a delay
     setTimeout(() => {
       const aiResponses = [
-        "Based on your criteria, I've identified 3 potential off-market properties in Manchester that match your investment goals. Would you like me to analyze their potential ROI?",
-        "I can help you draft a personalized message to the property owner on Wisteria Lane. Their current situation suggests they might be open to a quick sale at 10% below market value.",
-        "The property market in that area has seen a 7% annual increase. Based on comparable sales, the renovation could yield a 15-20% profit margin if completed within 6 months.",
-        "I've analyzed the owner's situation, and they appear motivated to sell due to relocation. Would you like me to suggest negotiation strategies based on similar cases?",
+        "Based on your criteria, I've identified 5 potential off-market properties in Lisbon and Porto that match your investment goals. The Portuguese market shows strong rental yields of 4-6% annually. Shall I analyze their ROI potential?",
+        "I can help you draft a personalized message to the property owner in Cascais. They appear motivated to sell due to emigration to Brazil. Consider making an offer 8-12% below asking price, which is typical for off-market deals in Portugal.",
+        "The Portuguese property market has seen 12% annual growth in prime locations. Based on comparable sales in this area of the Algarve, renovation could yield a 20-25% profit margin, especially with the D7 visa driving international demand.",
+        "I've analyzed the owner's situation - they need a quick sale due to business relocation to Germany. Portuguese property law allows for flexible negotiation terms. Would you like me to suggest negotiation strategies based on similar transactions?",
+        "Properties in this region of Northern Portugal benefit from the interior renovation tax incentives. Average time to sell off-market properties here is 18 days, with strong demand from both domestic and international buyers.",
       ];
       
       const randomResponse = aiResponses[Math.floor(Math.random() * aiResponses.length)];
@@ -73,7 +74,7 @@ const AIAssistant = () => {
             <div className="flex justify-between items-center">
               <div className="flex items-center">
                 <Sparkles size={18} className="mr-2" />
-                <CardTitle className="text-base font-medium">AI Property Assistant</CardTitle>
+                <CardTitle className="text-base font-medium">AI Property Assistant - Portugal</CardTitle>
               </div>
               <Button 
                 variant="ghost" 

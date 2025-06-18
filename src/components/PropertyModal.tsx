@@ -56,14 +56,14 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
     const fullAddress = `${property.address}, ${property.city}, ${property.postcode}`;
     navigator.clipboard.writeText(fullAddress);
     toast({
-      title: "Address Copied",
+      title: "Endereço Copiado",
       description: "Property address copied to clipboard",
     });
   };
 
   const handleContactOwner = () => {
     toast({
-      title: "Contact Request Sent",
+      title: "Pedido de Contacto Enviado",
       description: "A meeting request has been sent to the property owner",
     });
   };
@@ -224,19 +224,20 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
                     AI Analysis
                   </h4>
                   <div className="mt-2 text-sm space-y-2">
-                    <p>This property has a <strong>high match score of {property.aiMatchScore}%</strong> based on your criteria.</p>
-                    <p>Potential profit: <strong>{formatCurrency(property.potentialValue - property.price)}</strong> after standard renovations.</p>
-                    <p>The seller appears <strong>motivated</strong> due to {property.ownerInfo.situation?.toLowerCase()}. Consider making an offer at 5-10% below asking price.</p>
-                    <p>Similar properties in this area typically receive multiple offers within 14 days of listing.</p>
+                    <p>This property has a <strong>high match score of {property.aiMatchScore}%</strong> based on your criteria for the Portuguese market.</p>
+                    <p>Potential profit: <strong>{formatCurrency(property.potentialValue - property.price)}</strong> after standard renovations and Portuguese market appreciation.</p>
+                    <p>The seller appears <strong>motivated</strong> due to {property.ownerInfo.situation?.toLowerCase()}. Portuguese off-market properties typically sell at 8-15% below market value.</p>
+                    <p>Similar properties in this Portuguese region typically receive multiple offers within 21 days of off-market listing.</p>
                   </div>
                 </div>
 
                 <div className="bg-gray-50 p-4 rounded-md">
-                  <h4 className="font-medium">Market Insights</h4>
+                  <h4 className="font-medium">Portuguese Market Insights</h4>
                   <div className="mt-2 text-sm">
-                    <p>Properties in {property.city} have appreciated 7.2% year-over-year.</p>
-                    <p className="mt-1">Average days on market: 24 days</p>
-                    <p className="mt-1">Demand in this neighborhood: <strong>High</strong></p>
+                    <p>Properties in {property.city} have appreciated 8.5% year-over-year, driven by the Golden Visa and D7 programs.</p>
+                    <p className="mt-1">Average days on market: 28 days</p>
+                    <p className="mt-1">International buyer demand in this area: <strong>High</strong></p>
+                    <p className="mt-1">Rental yield potential: <strong>4.5-6.2%</strong> annually</p>
                   </div>
                 </div>
               </div>
@@ -246,7 +247,7 @@ const PropertyModal = ({ property, isOpen, onClose }: PropertyModalProps) => {
 
         <DialogFooter className="px-6 py-4 border-t">
           <Button variant="outline" onClick={onClose} className="mr-2">
-            Close
+            Fechar
           </Button>
           <Button onClick={handleContactOwner}>
             Contact Owner

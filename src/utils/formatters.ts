@@ -1,8 +1,8 @@
 
 export const formatCurrency = (amount: number): string => {
-  return new Intl.NumberFormat('en-GB', {
+  return new Intl.NumberFormat('pt-PT', {
     style: 'currency',
-    currency: 'GBP',
+    currency: 'EUR',
     maximumFractionDigits: 0,
   }).format(amount);
 };
@@ -13,6 +13,5 @@ export const formatDate = (dateString: string): string => {
     month: 'short', 
     day: 'numeric' 
   };
-  return new Date(dateString).toLocaleDateString('en-GB', options);
+  return new Date(dateString).toLocaleDateString('pt-PT', options);
 };
-
