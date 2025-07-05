@@ -5,8 +5,8 @@ import { Property } from "@/utils/mockData";
 interface FavoritesContextType {
   favorites: Property[];
   addToFavorites: (property: Property) => void;
-  removeFromFavorites: (propertyId: number) => void;
-  isFavorite: (propertyId: number) => boolean;
+  removeFromFavorites: (propertyId: string) => void;
+  isFavorite: (propertyId: string) => boolean;
 }
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
@@ -35,11 +35,11 @@ export const FavoritesProvider = ({ children }: FavoritesProviderProps) => {
     });
   };
 
-  const removeFromFavorites = (propertyId: number) => {
+  const removeFromFavorites = (propertyId: string) => {
     setFavorites(prev => prev.filter(fav => fav.id !== propertyId));
   };
 
-  const isFavorite = (propertyId: number) => {
+  const isFavorite = (propertyId: string) => {
     return favorites.some(fav => fav.id === propertyId);
   };
 
