@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -8,6 +9,9 @@ import { Bell, Menu, Search, X } from "lucide-react";
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const location = useLocation();
+  
+  const isActive = (path: string) => location.pathname === path;
   
   return (
     <header className="bg-white shadow-sm border-b sticky top-0 z-50">
@@ -20,16 +24,54 @@ const Navbar = () => {
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
           </div>
-          <h1 className="text-xl font-bold text-property-navy hidden sm:block">OffMarket AI</h1>
-          <h1 className="text-xl font-bold text-property-navy sm:hidden">OMA</h1>
+          <Link to="/">
+            <h1 className="text-xl font-bold text-property-navy hidden sm:block">OffMarket AI</h1>
+            <h1 className="text-xl font-bold text-property-navy sm:hidden">OMA</h1>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <a href="#" className="font-medium text-property-navy">Dashboard</a>
-          <a href="#" className="font-medium text-property-navy hover:text-property-blue transition-colors">Saved Properties</a>
-          <a href="#" className="font-medium text-property-navy hover:text-property-blue transition-colors">Analytics</a>
-          <a href="#" className="font-medium text-property-navy hover:text-property-blue transition-colors">Contacts</a>
+          <Link 
+            to="/" 
+            className={`font-medium transition-colors ${
+              isActive('/') 
+                ? 'text-property-blue font-semibold' 
+                : 'text-property-navy hover:text-property-blue'
+            }`}
+          >
+            Dashboard
+          </Link>
+          <Link 
+            to="/saved-properties" 
+            className={`font-medium transition-colors ${
+              isActive('/saved-properties') 
+                ? 'text-property-blue font-semibold' 
+                : 'text-property-navy hover:text-property-blue'
+            }`}
+          >
+            Saved Properties
+          </Link>
+          <Link 
+            to="/analytics" 
+            className={`font-medium transition-colors ${
+              isActive('/analytics') 
+                ? 'text-property-blue font-semibold' 
+                : 'text-property-navy hover:text-property-blue'
+            }`}
+          >
+            Analytics
+          </Link>
+          <Link 
+            to="/contacts" 
+            className={`font-medium transition-colors ${
+              isActive('/contacts') 
+                ? 'text-property-blue font-semibold' 
+                : 'text-property-navy hover:text-property-blue'
+            }`}
+          >
+            Contacts
+          </Link>
         </nav>
 
         {/* Search bar - Desktop */}
@@ -91,11 +133,71 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <nav className="md:hidden bg-white py-3 px-4 shadow-sm">
           <ul className="space-y-4">
-            <li><a href="#" className="block font-medium text-property-navy">Dashboard</a></li>
-            <li><a href="#" className="block font-medium text-property-navy">Saved Properties</a></li>
-            <li><a href="#" className="block font-medium text-property-navy">Analytics</a></li>
-            <li><a href="#" className="block font-medium text-property-navy">Contacts</a></li>
-            <li><a href="#" className="block font-medium text-property-navy">Settings</a></li>
+            <li>
+              <Link 
+                to="/" 
+                className={`block font-medium transition-colors ${
+                  isActive('/') 
+                    ? 'text-property-blue font-semibold' 
+                    : 'text-property-navy hover:text-property-blue'
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/saved-properties" 
+                className={`block font-medium transition-colors ${
+                  isActive('/saved-properties') 
+                    ? 'text-property-blue font-semibold' 
+                    : 'text-property-navy hover:text-property-blue'
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Saved Properties
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/analytics" 
+                className={`block font-medium transition-colors ${
+                  isActive('/analytics') 
+                    ? 'text-property-blue font-semibold' 
+                    : 'text-property-navy hover:text-property-blue'
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Analytics
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/contacts" 
+                className={`block font-medium transition-colors ${
+                  isActive('/contacts') 
+                    ? 'text-property-blue font-semibold' 
+                    : 'text-property-navy hover:text-property-blue'
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contacts
+              </Link>
+            </li>
+            <li>
+              <Link 
+                to="/settings" 
+                className={`block font-medium transition-colors ${
+                  isActive('/settings') 
+                    ? 'text-property-blue font-semibold' 
+                    : 'text-property-navy hover:text-property-blue'
+                }`}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Settings
+              </Link>
+            </li>
           </ul>
         </nav>
       )}
