@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, CreditCard } from "lucide-react";
 import { Property } from "@/utils/mockData";
 import { formatCurrency } from "@/utils/formatters";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import PropertyModal from './PropertyModal';
 
 interface PropertyCardProps {
@@ -12,8 +13,10 @@ interface PropertyCardProps {
 }
 
 const PropertyCard = ({ property }: PropertyCardProps) => {
-  const [isFavorite, setIsFavorite] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+  
+  const isPropertyFavorite = isFavorite(property.id);
   
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -25,6 +28,15 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
         return 'bg-amber-100 text-amber-800';
       default:
         return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isPropertyFavorite) {
+      removeFromFavorites(property.id);
+    } else {
+      addToFavorites(property);
     }
   };
 
@@ -41,16 +53,13 @@ const PropertyCard = ({ property }: PropertyCardProps) => {
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
           />
           <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsFavorite(!isFavorite);
-            }}
+            onClick={handleFavoriteClick}
             className="absolute top-3 right-3 p-1.5 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:bg-white transition-colors"
           >
             <Heart 
               size={18} 
-              fill={isFavorite ? "#ef4444" : "none"} 
-              stroke={isFavorite ? "#ef4444" : "currentColor"}
+              fill={isPropertyFavorite ? "#ef4444" : "none"} 
+              stroke={isPropertyFavorite ? "#ef4444" : "currentColor"}
             />
           </button>
           <div className="absolute bottom-3 left-3 flex gap-2">
