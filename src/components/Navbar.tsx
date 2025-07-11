@@ -72,6 +72,16 @@ const Navbar = () => {
           >
             Contacts
           </Link>
+          <Link 
+            to="/settings" 
+            className={`font-medium transition-colors ${
+              isActive('/settings') 
+                ? 'text-property-blue font-semibold' 
+                : 'text-property-navy hover:text-property-blue'
+            }`}
+          >
+            Settings
+          </Link>
         </nav>
 
         {/* Search bar - Desktop */}
